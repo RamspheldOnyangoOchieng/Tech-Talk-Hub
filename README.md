@@ -93,6 +93,7 @@ Introduction to Python programming with text-based games:
 | Project | Description | File |
 |---------|-------------|------|
 | **Guess the Number** | A number guessing game where the computer picks a random number and gives hints. | `Grade_7-9/guess_number.py` |
+| **Number Quest** | Gamified UI version of Guess the Number with high scores and difficulty levels. | `Grade_7-9/guess_number_ui.html` |
 | **Advanced Tic Tac Toe** | Enhanced Tic Tac Toe with better visuals and game logic. | `Grade_7-9/tic_tac_toe_advanced.html` |
 
 ### 🌐 Grade 10-12 (Advanced)
