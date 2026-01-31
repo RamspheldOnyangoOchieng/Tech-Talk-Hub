@@ -9,7 +9,7 @@ import random
 import time
 
 # Game settings
-cell_size = 35  # Smaller cells for a bigger maze
+cell_size = 28  # Resized to fit screen better
 moves = 0
 games_won = 0
 best_score = None
@@ -38,14 +38,14 @@ player_row = 1
 player_col = 1
 
 # Centering constants for 15x15 grid
-START_X = -260
-START_Y = 260
+START_X = -210
+START_Y = 210
 
 # Set up the screen
 screen = turtle.Screen()
 screen.title("Maze Escape Game - Extreme Edition")
 screen.bgcolor("#1a1a2e") # Darker background for more intensity
-screen.setup(width=650, height=750)
+screen.setup(width=580, height=650)
 screen.tracer(0)
 
 # Create turtles for drawing
@@ -131,7 +131,7 @@ def update_treasure_position():
 def update_display():
     """Update the text display"""
     text_turtle.clear()
-    text_turtle.goto(0, 310)
+    text_turtle.goto(0, 270)
     text_turtle.write(f"Moves: {moves}  |  Games: {games_won}  |  Best: {best_score if best_score else '--'}", 
                      align="center", font=("Arial", 14, "bold"))
 
