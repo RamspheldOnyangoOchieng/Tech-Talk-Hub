@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .pond {
+            height: 200px;
+            background: #3498db;
+            border-radius: 8px;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .frog {
+            font-size: 40px;
+            margin: 5px;
+        }
+
+        .selector {
+            margin-bottom: 20px;
+            text-align: left;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        select {
+            padding: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Flexbox Frog Pond</h1>
+        <p>Help the frogs find their spots by changing the <strong>justify-content</strong> property!</p>
+
+        <div class="selector">
+            .pond { <br>
+            &nbsp;&nbsp;display: flex; <br>
+            &nbsp;&nbsp;justify-content:
+            <select id="justify-select" onchange="updateFlex()">
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+            </select>; <br>
+            }
+        </div>
+
+        <div class="pond" id="pond">
+            <span class="frog">🐸</span>
+            <span class="frog">🐸</span>
+            <span class="frog">🐸</span>
+        </div>
+
+        <p id="feedback">The frogs are at the start of the pond.</p>
+    </div>
+
+    <script>
+        function updateFlex() {
+            const val = document.getElementById('justify-select').value;
+            const pond = document.getElementById('pond');
+            const fb = document.getElementById('feedback');
+            pond.style.justifyContent = val;
+
+            const messages = {
+                'flex-start': 'The frogs are at the start of the pond.',
+                'center': 'The frogs are in the middle!',
+                'flex-end': 'The frogs are at the end!',
+                'space-between': 'The frogs have max space between them!',
+                'space-around': 'The frogs have some space around them!',
+                'space-evenly': 'The frogs are evenly spaced out!'
+            };
+            fb.innerText = messages[val];
+        }
+    </script>
+</body>
+
+</html>

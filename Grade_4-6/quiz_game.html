@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timed Quiz</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        button.correct {
+            background: #2ecc71;
+            color: white;
+        }
+
+        button.wrong {
+            background: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-card" id="quiz">
+        <div class="timer" id="timer">Time: 10s</div>
+        <h2 id="question">Loading...</h2>
+        <div class="options" id="options"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "What is 5 + 7?", a: ["10", "12", "13", "11"], correct: 1 },
+            { q: "Which planet is known as the Red Planet?", a: ["Mars", "Venus", "Jupiter", "Saturn"], correct: 0 },
+            { q: "How many legs does a spider have?", a: ["6", "8", "10", "4"], correct: 1 }
+        ];
+
+        let currentQ = 0;
+        let timeLeft = 10;
+        let timer;
+
+        function loadQuestion() {
+            if (currentQ >= questions.length) {
+                document.getElementById('quiz').innerHTML = "<h2>Quiz Finished!</h2>";
+                clearInterval(timer);
+                return;
+            }
+            const q = questions[currentQ];
+            document.getElementById('question').innerText = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            resetTimer();
+        }
+
+        function checkAnswer(index) {
+            if (index === questions[currentQ].correct) {
+                currentQ++;
+                loadQuestion();
+            } else {
+                alert("Wrong! Try again.");
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            timeLeft = 10;
+            document.getElementById('timer').innerText = `Time: ${timeLeft}s`;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Time is up! Moving to next question.");
+                    currentQ++;
+                    loadQuestion();
+                }
+            }, 1000);
+        }
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>

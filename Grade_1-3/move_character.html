@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move the Character</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        #game-area {
+            width: 100vw;
+            height: 100vh;
+            background-color: #87CEEB;
+            position: relative;
+            transition: background-color 1s;
+        }
+
+        #character {
+            position: absolute;
+            font-size: 50px;
+            transition: left 0.1s, top 0.1s;
+            z-index: 2;
+        }
+
+        .monster {
+            position: absolute;
+            font-size: 50px;
+            transition: left 0.5s linear, top 0.5s linear;
+            z-index: 1;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
+            user-select: none;
+        }
+
+        #game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        #game-over h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px red;
+        }
+
+        #game-over button {
+            padding: 15px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.4);
+        }
+
+        #game-over button:hover {
+            transform: scale(1.1);
+            background: #ff6666;
+        }
+
+        .monster-alert {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: none;
+            z-index: 50;
+            animation: fadeInOut 2s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+        }
+
+        .instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-area">
+        <div class="instructions">Use Arrow Keys to Move! <br> Don't let the Monsters catch you! 👾</div>
+        <div id="character" style="left: 50%; top: 50%;">🏃</div>
+        <div class="monster" style="left: 0%; top: 0%;">👾</div>
+        <div id="game-over">
+            <h1>LEVEL FAILED! 💀</h1>
+            <p>The monsters caught you!</p>
+            <button onclick="resetGame()">Try Again</button>
+        </div>
+        <div id="monster-alert" class="monster-alert">BEWARE! A NEW MONSTER HAS JOINED THE CHASE! 👹</div>
+    </div>
+
+    <script>
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+
+        const char = document.getElementById('character');
+        const area = document.getElementById('game-area');
+        const speed = 25;
+        const backgrounds = ['#87CEEB', '#90EE90', '#F0E68C', '#FFB6C1'];
+        let bgIndex = 0;
+        let isGameOver = false;
+
+        // Monster management
+        const monsterEmojis = ['👹', '👻', '👽', '🧟', '🧛', '🐍'];
+        const monsters = [
+            {
+                x: 0,
+                y: 0,
+                element: document.querySelector('.monster'),
+                speed: 3 + Math.random() * 2,
+                nextTeleport: Date.now() + 5000 + Math.random() * 8000
+            }
+        ];
+
+        // Get a random spawn position at any edge of the screen
+        function getRandomEdgePosition() {
+            const edge = Math.floor(Math.random() * 4);
+            let px, py;
+            switch (edge) {
+                case 0: // Top edge
+                    px = Math.random() * window.innerWidth;
+                    py = -60;
+                    break;
+                case 1: // Right edge
+                    px = window.innerWidth + 60;
+                    py = Math.random() * window.innerHeight;
+                    break;
+                case 2: // Bottom edge
+                    px = Math.random() * window.innerWidth;
+                    py = window.innerHeight + 60;
+                    break;
+                case 3: // Left edge
+                    px = -60;
+                    py = Math.random() * window.innerHeight;
+                    break;
+            }
+            return { x: px, y: py };
+        }
+
+        // Teleport a monster with fade effect
+        function teleportMonster(m) {
+            m.element.style.transition = 'opacity 0.3s';
+            m.element.style.opacity = '0';
+
+            setTimeout(() => {
+                const pos = getRandomEdgePosition();
+                m.x = pos.x;
+                m.y = pos.y;
+                m.element.style.left = m.x + 'px';
+                m.element.style.top = m.y + 'px';
+                m.speed = 3 + Math.random() * 2;
+                m.nextTeleport = Date.now() + 8000 + Math.random() * 12000;
+
+                setTimeout(() => {
+                    m.element.style.opacity = '1';
+                }, 100);
+            }, 300);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (isGameOver) return;
+            if (e.key === 'ArrowUp') y -= speed;
+            if (e.key === 'ArrowDown') y += speed;
+            if (e.key === 'ArrowLeft') x -= speed;
+            if (e.key === 'ArrowRight') x += speed;
+
+            // Boundary Check and Background change
+            if (x < 0) { x = window.innerWidth; changeBg(); }
+            if (x > window.innerWidth) { x = 0; changeBg(); }
+            if (y < 0) { y = window.innerHeight; changeBg(); }
+            if (y > window.innerHeight) { y = 0; changeBg(); }
+
+            updatePos();
+        });
+
+        function spawnMonster() {
+            if (monsters.length >= 7) return;
+
+            const corners = [
+                { x: 0, y: 0 },
+                { x: window.innerWidth - 60, y: 0 },
+                { x: 0, y: window.innerHeight - 60 },
+                { x: window.innerWidth - 60, y: window.innerHeight - 60 }
+            ];
+            const corner = corners[Math.floor(Math.random() * corners.length)];
+
+            const newMonster = document.createElement('div');
+            newMonster.className = 'monster';
+            newMonster.innerHTML = monsterEmojis[monsters.length - 1];
+            newMonster.style.left = corner.x + 'px';
+            newMonster.style.top = corner.y + 'px';
+            newMonster.style.opacity = '0';
+            newMonster.style.transform = 'scale(0.5)';
+            area.appendChild(newMonster);
+
+            // Show alert
+            const alertBox = document.getElementById('monster-alert');
+            alertBox.innerHTML = `BEWARE! A NEW MONSTER HAS JOINED THE CHASE! ${monsterEmojis[monsters.length - 1]}`;
+            alertBox.style.display = 'block';
+            setTimeout(() => alertBox.style.display = 'none', 2000);
+
+            // Animate spawn
+            setTimeout(() => {
+                newMonster.style.transition = 'all 0.5s ease-out';
+                newMonster.style.opacity = '1';
+                newMonster.style.transform = 'scale(1)';
+            }, 10);
+
+            monsters.push({
+                x: corner.x,
+                y: corner.y,
+                element: newMonster,
+                speed: 3 + Math.random() * 2,
+                nextTeleport: Date.now() + 8000 + Math.random() * 10000
+            });
+        }
+
+        // Spawn monsters at random intervals
+        function scheduleNextSpawn() {
+            const nextTime = 3000 + Math.random() * 4000; // Random interval between 3-7 seconds
+            setTimeout(() => {
+                if (!isGameOver && monsters.length < 7) {
+                    spawnMonster();
+                }
+                if (monsters.length < 7) {
+                    scheduleNextSpawn();
+                }
+            }, nextTime);
+        }
+        scheduleNextSpawn();
+
+        // Monster Chase Logic
+        setInterval(() => {
+            if (isGameOver) return;
+            const now = Date.now();
+
+            monsters.forEach((m, i) => {
+                // Check if it's time to teleport this monster
+                if (now >= m.nextTeleport) {
+                    teleportMonster(m);
+                    return; // Skip movement this tick
+                }
+
+                // Calculate direction to character
+                let dx = x - m.x;
+                let dy = y - m.y;
+                let distToPlayer = Math.sqrt(dx * dx + dy * dy);
+
+                if (distToPlayer < 1) distToPlayer = 1;
+
+                // Move towards character
+                m.x += (dx / distToPlayer) * m.speed;
+                m.y += (dy / distToPlayer) * m.speed;
+
+                m.element.style.left = m.x + 'px';
+                m.element.style.top = m.y + 'px';
+
+                // Collision Check
+                if (distToPlayer < 45) {
+                    showGameOver();
+                }
+            });
+        }, 80);
+
+        function showGameOver() {
+            isGameOver = true;
+            document.getElementById('game-over').style.display = 'flex';
+        }
+
+        function resetGame() {
+            isGameOver = false;
+            document.getElementById('game-over').style.display = 'none';
+            // Reset positions
+            x = window.innerWidth / 2;
+            y = window.innerHeight / 2;
+
+            // Reset all monsters to random edge positions
+            monsters.forEach((mon) => {
+                const pos = getRandomEdgePosition();
+                mon.x = pos.x;
+                mon.y = pos.y;
+                mon.speed = 3 + Math.random() * 2;
+                mon.nextTeleport = Date.now() + 5000 + Math.random() * 10000;
+                mon.element.style.opacity = '1';
+            });
+            updatePos();
+        }
+
+        function updatePos() {
+            char.style.left = x + 'px';
+            char.style.top = y + 'px';
+        }
+
+        function changeBg() {
+            bgIndex = (bgIndex + 1) % backgrounds.length;
+            area.style.backgroundColor = backgrounds[bgIndex];
+        }
+
+        updatePos();
+    </script>
+</body>
+
+</html>

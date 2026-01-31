@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2d3436;
+        }
+
+        .balance {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dfe6e9;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00b894;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .history {
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fff;
+            border: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-left: 5px solid #d63031;
+        }
+
+        li.plus {
+            border-left-color: #00b894;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Expense Tracker</h2>
+        <div class="balance" id="balance">$0.00</div>
+
+        <input type="text" id="text" placeholder="Description (e.g. Lunch)">
+        <input type="number" id="amount" placeholder="Amount (negative for expense, positive for income)">
+        <button onclick="addTransaction()">Add Transaction</button>
+
+        <div class="history">
+            <h3>History</h3>
+            <ul id="list"></ul>
+        </div>
+    </div>
+
+    <script>
+        let transactions = [];
+
+        function addTransaction() {
+            const text = document.getElementById('text').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (text === '' || isNaN(amount)) {
+                alert('Please enter text and amount');
+                return;
+            }
+
+            const transaction = { id: Date.now(), text, amount };
+            transactions.push(transaction);
+            updateUI();
+
+            document.getElementById('text').value = '';
+            document.getElementById('amount').value = '';
+        }
+
+        function updateUI() {
+            const list = document.getElementById('list');
+            const balance = document.getElementById('balance');
+            list.innerHTML = '';
+
+            let total = 0;
+            transactions.forEach(t => {
+                const item = document.createElement('li');
+                item.classList.add(t.amount < 0 ? 'minus' : 'plus');
+                item.innerHTML = `${t.text} <span>${t.amount < 0 ? '-' : '+'}$${Math.abs(t.amount)}</span>`;
+                list.appendChild(item);
+                total += t.amount;
+            });
+
+            balance.innerText = `$${total.toFixed(2)}`;
+            balance.style.color = total >= 0 ? '#00b894' : '#d63031';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Tic-Tac-Toe</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; display: flex; flex-direction: column; align-items: center; background-color: #f0f8ff; }
+        h1 { color: #ff4500; }
+        .grid { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; }
+        button { width: 100px; height: 100px; font-size: 2rem; cursor: pointer; border: 2px solid #333; border-radius: 10px; background-color: #fff; }
+        button:hover { background-color: #e0e0e0; }
+        #status { margin-top: 20px; font-size: 1.5rem; font-weight: bold; }
+        .reset { margin-top: 20px; padding: 10px 20px; font-size: 1rem; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div class="grid" id="board">
+        <button onclick="makeMove(0)"></button>
+        <button onclick="makeMove(1)"></button>
+        <button onclick="makeMove(2)"></button>
+        <button onclick="makeMove(3)"></button>
+        <button onclick="makeMove(4)"></button>
+        <button onclick="makeMove(5)"></button>
+        <button onclick="makeMove(6)"></button>
+        <button onclick="makeMove(7)"></button>
+        <button onclick="makeMove(8)"></button>
+    </div>
+    <div id="status">Player X's Turn</div>
+    <button class="reset" onclick="resetGame()">Reset Game</button>
+
+    <script>
+        let currentPlayer = 'X';
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let active = true;
+
+        function makeMove(index) {
+            const buttons = document.querySelectorAll('.grid button');
+            if (board[index] === '' && active) {
+                board[index] = currentPlayer;
+                buttons[index].innerText = currentPlayer;
+                buttons[index].style.color = currentPlayer === 'X' ? 'red' : 'blue';
+                
+                if (checkWin()) {
+                    document.getElementById('status').innerText = 'Player ' + currentPlayer + ' Wins!';
+                    active = false;
+                } else if (board.every(cell => cell !== '')) {
+                    document.getElementById('status').innerText = "It's a Draw!";
+                    active = false;
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    document.getElementById('status').innerText = "Player " + currentPlayer + "'s Turn";
+                }
+            }
+        }
+
+        function checkWin() {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return wins.some(combo => board[combo[0]] !== '' && board[combo[0]] === board[combo[1]] && board[combo[1]] === board[combo[2]]);
+        }
+
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            active = true;
+            document.getElementById('status').innerText = "Player X's Turn";
+            document.querySelectorAll('.grid button').forEach(btn => btn.innerText = '');
+        }
+    </script>
+</body>
+</html>

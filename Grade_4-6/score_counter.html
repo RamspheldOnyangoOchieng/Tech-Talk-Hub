@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Counter Game</title>
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+            text-align: center;
+            background-color: #fce4ec;
+            color: #880e4f;
+            padding-top: 50px;
+        }
+
+        .game-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #score {
+            font-size: 5rem;
+            margin: 20px 0;
+        }
+
+        #timer {
+            font-size: 1.5rem;
+            color: #d81b60;
+        }
+
+        .click-btn {
+            padding: 20px 40px;
+            font-size: 2rem;
+            border: none;
+            border-radius: 50px;
+            background-color: #e91e63;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .click-btn:active {
+            transform: scale(0.9);
+        }
+
+        .start-btn {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-box">
+        <h1>Fast Clicker!</h1>
+        <div id="timer">Time Left: 10s</div>
+        <div id="score">0</div>
+        <button class="click-btn" id="clickBtn" onclick="incrementScore()" disabled>CLICK ME!</button>
+        <br><br>
+        <button class="start-btn" onclick="startGame()">Start Game</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 10;
+        let timerId;
+
+        function incrementScore() {
+            score++;
+            document.getElementById('score').innerText = score;
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = 10;
+            document.getElementById('score').innerText = score;
+            document.getElementById('clickBtn').disabled = false;
+            document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+
+            clearInterval(timerId);
+            timerId = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    document.getElementById('clickBtn').disabled = true;
+                    alert("Game Over! Your score: " + score);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
