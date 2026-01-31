@@ -85,6 +85,7 @@ Projects introducing logic, math operations, and user interaction:
 | **Calculator** | A functional calculator with basic arithmetic operations and a modern UI. | `Grade_4-6/calculator.html` |
 | **Quiz Game** | Interactive quiz game with multiple-choice questions and score tracking. | `Grade_4-6/quiz_game.html` |
 | **Score Counter** | Keep track of scores for games or activities with increment/decrement buttons. | `Grade_4-6/score_counter.html` |
+| **Mystery Number (No JS)** | Learn how CSS can handle game logic using radio buttons and selectors. | `Grade_4-6/guess_number_nofilter.html` |
 
 ### 🐍 Grade 7-9 (Python Introduction)
 
@@ -93,6 +94,7 @@ Introduction to Python programming with text-based games:
 | Project | Description | File |
 |---------|-------------|------|
 | **Guess the Number** | A number guessing game where the computer picks a random number and gives hints. | `Grade_7-9/guess_number.py` |
+| **Maze Escape** | A fun maze game using Turtle graphics. Find the gold treasure while avoiding walls! | `Grade_7-9/maze_escape.py` |
 | **Number Quest** | Gamified UI version of Guess the Number with high scores and difficulty levels. | `Grade_7-9/guess_number_ui.html` |
 | **Advanced Tic Tac Toe** | Enhanced Tic Tac Toe with better visuals and game logic. | `Grade_7-9/tic_tac_toe_advanced.html` |
 

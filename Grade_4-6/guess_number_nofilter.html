@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Mystery Number</title>
+    <style>
+        /* 
+           LEARNING MOMENT:
+           This game uses NO JAVASCRIPT! 
+           Logic is handled using HTML checkboxes/radio buttons and CSS selectors.
+        */
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --primary: #38bdf8;
+            --win: #22c55e;
+            --wrong: #ef4444;
+            --text: #f1f5f9;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Hide the actual radio buttons */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* The Grid Area */
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* Label styling (these act as our "buttons") */
+        label {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+            display: block;
+        }
+
+        label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Feedback Screen - hidden by default */
+        .feedback {
+            display: none;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-weight: bold;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --------------------------------------------------
+           THE CSS LOGIC ENGINE
+           -------------------------------------------------- */
+
+        /* 1. When ANY radio is checked, show the "Wrong" feedback first */
+        input[type="radio"]:checked~.feedback.wrong {
+            display: block;
+            border: 2px solid var(--wrong);
+            color: var(--wrong);
+        }
+
+        /* 2. SPECIFIC LOGIC: When the CORRECT radio is checked (let's pick #7)
+           We hide the "wrong" one and show the "win" one! */
+        #num7:checked~.feedback.wrong {
+            display: none;
+        }
+
+        #num7:checked~.feedback.win {
+            display: block;
+            border: 2px solid var(--win);
+            color: var(--win);
+        }
+
+        /* 3. Highlight the selected number */
+        input:checked+label {
+            background: var(--primary);
+            color: var(--bg);
+            border-color: var(--primary);
+        }
+
+        /* Special highlight for the winner if they find it */
+        #num7:checked+label {
+            background: var(--win);
+            color: white;
+        }
+
+        .reset-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            border-bottom: 1px solid transparent;
+        }
+
+        .reset-btn:hover {
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Mystery Number</h1>
+        <p>One of these numbers is the winner. Can you find it using only CSS power?</p>
+
+        <form>
+            <div class="number-grid">
+                <!-- Numbers 1 to 10 -->
+                <input type="radio" name="guess" id="num1"><label for="num1">1</label>
+                <input type="radio" name="guess" id="num2"><label for="num2">2</label>
+                <input type="radio" name="guess" id="num3"><label for="num3">3</label>
+                <input type="radio" name="guess" id="num4"><label for="num4">4</label>
+                <input type="radio" name="guess" id="num5"><label for="num5">5</label>
+                <input type="radio" name="guess" id="num6"><label for="num6">6</label>
+
+                <!-- THE SECRET WINNER -->
+                <input type="radio" name="guess" id="num7"><label for="num7">7</label>
+
+                <input type="radio" name="guess" id="num8"><label for="num8">8</label>
+                <input type="radio" name="guess" id="num9"><label for="num9">9</label>
+                <input type="radio" name="guess" id="num10"><label for="num10">10</label>
+                <input type="radio" name="guess" id="num11"><label for="num11">11</label>
+                <input type="radio" name="guess" id="num12"><label for="num12">12</label>
+                <input type="radio" name="guess" id="num13"><label for="num13">13</label>
+                <input type="radio" name="guess" id="num14"><label for="num14">14</label>
+                <input type="radio" name="guess" id="num15"><label for="num15">15</label>
+            </div>
+
+            <!-- Feedback Areas -->
+            <div class="feedback wrong">
+                ❌ Try again! Not that one...
+            </div>
+
+            <div class="feedback win">
+                🎉 YOU FOUND IT! 🎉<br>
+                Number 7 was the secret!
+            </div>
+
+            <button type="reset" class="reset-btn">Reset Board</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
