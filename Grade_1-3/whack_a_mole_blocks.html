@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Whack-a-Mole: Block Lab</title>
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .intro {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* The Workspace */
+        .workspace {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Block Styling */
+        .block {
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* Puzzle Notch Effect */
+        .block::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20px;
+            width: 30px;
+            height: 10px;
+            background-color: inherit;
+            border-radius: 0 0 5px 5px;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+        }
+
+        /* Block Colors */
+        .block-setup {
+            background-color: #ffab19;
+        }
+
+        /* Setup (Yellow) */
+        .block-look {
+            background-color: #4c97ff;
+        }
+
+        /* Looks (Blue) */
+        .block-event {
+            background-color: #ff6680;
+        }
+
+        /* Events (Pink) */
+        .block-action {
+            background-color: #59c059;
+        }
+
+        /* Action (Green) */
+        .block-logic {
+            background-color: #9966ff;
+        }
+
+        /* Logic (Purple) */
+
+        .code-hint {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .indent {
+            margin-left: 30px;
+        }
+
+        .indent-2 {
+            margin-left: 60px;
+        }
+
+        .tag {
+            color: #fff;
+            opacity: 0.8;
+            font-size: 12px;
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Whack-a-Mole Block Lab 🧩</h1>
+    <p class="intro">This is how your code looks as "Logic Blocks"!</p>
+
+    <div class="workspace">
+
+        <!-- Setup Block -->
+        <div class="block block-setup">
+            <span>🏁 Start the Page</span>
+            <span class="code-hint">&lt;html&gt;</span>
+        </div>
+
+        <!-- Background Block -->
+        <div class="block block-look indent">
+            <span>🎨 Set Background to Light Green</span>
+            <span class="code-hint">body { background: #dcedc8 }</span>
+        </div>
+
+        <!-- Garden Block -->
+        <div class="block block-action indent">
+            <span>🌱 Create a Grass Garden</span>
+            <span class="code-hint">&lt;div class="garden"&gt;</span>
+        </div>
+
+        <!-- Hole Block -->
+        <div class="block block-action indent-2">
+            <span>🕳️ Add a Mole Hole</span>
+            <span class="code-hint">&lt;div class="hole"&gt;</span>
+        </div>
+
+        <!-- Pop Up Block -->
+        <div class="block block-look indent-2">
+            <span>🎞️ Play "Pop Up" Animation</span>
+            <span class="code-hint">animation: popUp</span>
+        </div>
+
+        <!-- Character Block -->
+        <div class="block block-action indent-2">
+            <span>🐹 Put a Mole inside</span>
+            <span class="code-hint">innerHTML: 🐹</span>
+        </div>
+
+        <!-- Click Event -->
+        <div class="block block-event indent-2">
+            <span>🖱️ When Clicked (Whacked)</span>
+            <span class="code-hint">input:checked</span>
+        </div>
+
+        <!-- Logic Block -->
+        <div class="block block-logic indent-2">
+            <span>👻 Hide the Mole!</span>
+            <span class="code-hint">display: none</span>
+        </div>
+
+        <!-- Closing Garden -->
+        <div class="block block-action indent">
+            <span>✅ End of the Garden</span>
+            <span class="code-hint">&lt;/div&gt;</span>
+        </div>
+
+        <!-- Closing Page -->
+        <div class="block block-setup">
+            <span>👋 End the Page</span>
+            <span class="code-hint">&lt;/html&gt;</span>
+        </div>
+
+    </div>
+
+    <p style="margin-top: 30px; color: #888;">Each block represents a part of your code!</p>
+
+</body>
+
+</html>

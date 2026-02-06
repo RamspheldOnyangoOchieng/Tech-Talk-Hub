@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Magic Maze Game</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+        }
+
+        /* The Game Area */
+        .maze-container {
+            width: 500px;
+            height: 400px;
+            background-color: white;
+            border: 10px solid #333;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        /* The Path they must follow */
+        .path {
+            background-color: #e0f7fa;
+            position: absolute;
+        }
+
+        /* Building the maze path */
+        .path-1 {
+            width: 100px;
+            height: 50px;
+            top: 20px;
+            left: 0;
+        }
+
+        .path-2 {
+            width: 50px;
+            height: 200px;
+            top: 20px;
+            left: 100px;
+        }
+
+        .path-3 {
+            width: 250px;
+            height: 50px;
+            top: 170px;
+            left: 100px;
+        }
+
+        .path-4 {
+            width: 50px;
+            height: 150px;
+            top: 170px;
+            left: 350px;
+        }
+
+        .path-5 {
+            width: 100px;
+            height: 50px;
+            top: 320px;
+            left: 350px;
+        }
+
+        /* The Start and End */
+        .start {
+            top: 30px;
+            left: 5px;
+            position: absolute;
+            font-size: 20px;
+            color: green;
+            font-weight: bold;
+        }
+
+        .finish {
+            top: 330px;
+            left: 455px;
+            position: absolute;
+            font-size: 40px;
+        }
+
+        /* The "Lava" (Walls) */
+        /* If the container is hovered, but NOT the path, show Game Over */
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            display: none;
+            /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            z-index: 10;
+        }
+
+        /* MAGIC CSS LOGIC: */
+        /* If you hover the container, show game over... */
+        .maze-container:hover .game-over {
+            display: flex;
+        }
+
+        /* ...BUT if you are hovering the PATH, hide the game over! */
+        .maze-container .path:hover~.game-over {
+            display: none;
+        }
+
+        /* Keep hiding if you hover the finish too */
+        .finish:hover~.game-over {
+            display: none;
+        }
+
+        .win-message {
+            display: none;
+            color: gold;
+            font-size: 50px;
+        }
+
+        .finish:hover+.win-message {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>The Magic Maze 🌀</h1>
+    <p>Move your mouse from <b>Start</b> to <b>End</b>!</p>
+    <p>Don't touch the white walls!</p>
+
+    <div class="maze-container">
+        <!-- The Safe Path -->
+        <div class="path path-1"></div>
+        <div class="path path-2"></div>
+        <div class="path path-3"></div>
+        <div class="path path-4"></div>
+        <div class="path path-5"></div>
+
+        <div class="start">START</div>
+        <div class="finish">🎁</div>
+
+        <!-- The Game Over Screen -->
+        <div class="game-over">OOPS! ❌<br>Try Again!</div>
+    </div>
+
+    <div class="win-message">YOU WIN! 🌟</div>
+</body>
+
+</html>

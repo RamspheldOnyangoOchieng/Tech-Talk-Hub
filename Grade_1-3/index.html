@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Grade 1-3 Game Box</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #3f51b5;
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        /* The Grid of Buttons */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* The Game Button */
+        .game-card {
+            text-decoration: none;
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 10px #00000022;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px #00000033;
+        }
+
+        .game-card:active {
+            transform: translateY(2px);
+            box-shadow: 0 5px #00000033;
+        }
+
+        .emoji {
+            font-size: 60px;
+        }
+
+        /* Colors for different games */
+        .maze {
+            background-color: #ff5252;
+        }
+
+        .hunt {
+            background-color: #4caf50;
+        }
+
+        .pet {
+            background-color: #2196f3;
+        }
+
+        .pop {
+            background-color: #9c27b0;
+        }
+
+        .mole {
+            background-color: #795548;
+        }
+
+        .shadow {
+            background-color: #ff9800;
+        }
+
+        .run {
+            background-color: #00bcd4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pick a Game! 🕹️</h1>
+    <p class="subtitle">All these games are fast and fun!</p>
+
+    <div class="menu-grid">
+
+        <a href="magic_maze.html" class="game-card maze">
+            <span class="emoji">🌀</span>
+            Magic Maze
+        </a>
+
+        <a href="emoji_hunt.html" class="game-card hunt">
+            <span class="emoji">🐱</span>
+            Emoji Hunt
+        </a>
+
+        <a href="custom_pet.html" class="game-card pet">
+            <span class="emoji">🐶</span>
+            My Custom Pet
+        </a>
+
+        <a href="balloon_pop.html" class="game-card pop">
+            <span class="emoji">🎈</span>
+            Balloon Pop
+        </a>
+
+        <a href="whack_a_mole.html" class="game-card mole">
+            <span class="emoji">🐹</span>
+            Whack-a-Mole
+        </a>
+
+        <a href="shadow_match.html" class="game-card shadow">
+            <span class="emoji">🐘</span>
+            Shadow Match
+        </a>
+
+        <a href="move_character_simple.html" class="game-card run">
+            <span class="emoji">🏃</span>
+            Run and Chase
+        </a>
+
+    </div>
+
+    <p style="margin-top: 50px; color: #999;">Made with simple HTML and CSS for Grades 1-3.</p>
+
+</body>
+
+</html>

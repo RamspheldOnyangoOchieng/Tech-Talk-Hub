@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kids Coding Block Editor</title>
+    <!-- We are using Google Blockly, the best tool for kids coding! -->
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #3f51b5;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #main-area {
+            display: flex;
+            flex: 1;
+        }
+
+        /* This is where the blocks live */
+        #blocklyDiv {
+            flex: 1;
+            height: 100%;
+        }
+
+        /* This is where the results show up */
+        #previewArea {
+            width: 400px;
+            background-color: white;
+            border-left: 5px solid #ccc;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #previewIframe {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .btn {
+            background-color: #ffab19;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .code-box {
+            margin-top: 20px;
+            background-color: #333;
+            color: #0f0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            overflow: auto;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>My Block Editor 🧩</h1>
+        <button class="btn" onclick="runCode()">Run My Code! 🚀</button>
+    </header>
+
+    <div id="main-area">
+        <!-- BLOCKLY INTERFACE -->
+        <div id="blocklyDiv"></div>
+
+        <!-- PREVIEW AREA -->
+        <div id="previewArea">
+            <h3>Look at your work:</h3>
+            <iframe id="previewIframe"></iframe>
+
+            <h3>The real code:</h3>
+            <div id="code-output" class="code-box">Your code will appear here...</div>
+        </div>
+    </div>
+
+    <!-- Define the Blocks -->
+    <xml id="toolbox" style="display: none">
+        <category name="Page Setup" colour="#ffab19">
+            <block type="web_page"></block>
+        </category>
+        <category name="Items" colour="#4c97ff">
+            <block type="text_heading"></block>
+            <block type="emoji_item"></block>
+        </category>
+        <category name="Colors" colour="#9966ff">
+            <block type="bg_color"></block>
+            <block type="text_color"></block>
+        </category>
+    </xml>
+
+    <script>
+        // 1. Define how our blocks look and what code they make
+        Blockly.Blocks['web_page'] = {
+            init: function () {
+                this.appendDummyInput().appendField("Start Web Page 🏁");
+                this.appendStatementInput("content").setCheck(null).appendField("put items here:");
+                this.setColour(20);
+                this.setTooltip("Start your web project");
+            }
+        };
+
+        Blockly.Blocks['text_heading'] = {
+            init: function () {
+                this.appendDummyInput().appendField("Write Title:")
+                    .appendField(new Blockly.FieldTextInput("Hello!"), "TEXT");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(210);
+            }
+        };
+
+        Blockly.Blocks['emoji_item'] = {
+            init: function () {
+                this.appendDummyInput().appendField("Add Emoji:")
+                    .appendField(new Blockly.FieldTextInput("🏃"), "EMOJI");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+            }
+        };
+
+        Blockly.Blocks['bg_color'] = {
+            init: function () {
+                this.appendDummyInput().appendField("Set Page Color to:")
+                    .appendField(new Blockly.FieldDropdown([["Sky Blue", "skyblue"], ["Pink", "pink"], ["Yellow", "yellow"], ["Green", "lightgreen"]]), "COLOR");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(260);
+            }
+        };
+
+        // 2. Generate Javascript/HTML from the blocks
+        const javascriptGenerator = Blockly.JavaScript; // In newer versions it's just Blockly.JavaScript or custom
+
+        function runCode() {
+            let code = `<!DOCTYPE html><html><head><style>body { font-family: sans-serif; text-align: center; padding: 20px; transition: background 1s; }</style></head><body>`;
+
+            // This is a simplified manual generator for this example
+            const topBlocks = workspace.getTopBlocks(true);
+            topBlocks.forEach(block => {
+                if (block.type === 'web_page') {
+                    let child = block.getInputTargetBlock('content');
+                    while (child) {
+                        if (child.type === 'bg_color') {
+                            let color = child.getFieldValue('COLOR');
+                            code += `<style>body { background-color: ${color}; }</style>`;
+                        }
+                        if (child.type === 'text_heading') {
+                            let text = child.getFieldValue('TEXT');
+                            code += `<h1>${text}</h1>`;
+                        }
+                        if (child.type === 'emoji_item') {
+                            let emoji = child.getFieldValue('EMOJI');
+                            code += `<div style="font-size: 100px;">${emoji}</div>`;
+                        }
+                        child = child.getNextBlock();
+                    }
+                }
+            });
+
+            code += `</body></html>`;
+
+            // Show code in the box
+            document.getElementById('code-output').innerText = code;
+
+            // Show result in the iframe
+            const iframe = document.getElementById('previewIframe');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(code);
+            doc.close();
+        }
+
+        // 3. Start Blockly
+        const workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox'),
+            scrollbars: true
+        });
+
+        // Add a starting block
+        const startBlock = workspace.newBlock('web_page');
+        startBlock.initSvg();
+        startBlock.render();
+
+    </script>
+</body>
+
+</html>

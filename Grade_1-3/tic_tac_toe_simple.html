@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple X and O</title>
+    <style>
+        body {
+            background-color: lightgreen;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .square {
+            background-color: white;
+            border: 2px solid black;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>X and O Game</h1>
+    <p>Look at the squares.</p>
+
+    <div class="grid">
+        <div class="square">X</div>
+        <div class="square">O</div>
+        <div class="square">X</div>
+        <div class="square">O</div>
+        <div class="square">X</div>
+        <div class="square">O</div>
+        <div class="square">X</div>
+        <div class="square">O</div>
+        <div class="square">X</div>
+    </div>
+
+    <p>Try to make a line!</p>
+</body>
+
+</html>

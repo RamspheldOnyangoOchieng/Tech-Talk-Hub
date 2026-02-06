@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Run Game</title>
+    <style>
+        body {
+            background-color: skyblue;
+            text-align: center;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+
+        .game-box {
+            background-color: white;
+            border: 5px solid blue;
+            width: 500px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .runner {
+            font-size: 50px;
+            position: absolute;
+            transform: scaleX(-1); /* Facing Right */
+            transition: left 0.1s, top 0.1s;
+        }
+
+        .monster {
+            font-size: 50px;
+            position: absolute;
+            transition: left 0.2s, top 0.2s;
+        }
+
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Monster is Following!</h1>
+    <p>Use the <b>Arrows</b> to run away!</p>
+    
+    <div class="game-box">
+        <div id="monster" class="monster">👾</div>
+        <div id="player" class="runner">🏃</div>
+    </div>
+
+    <p>Don't let the monster catch you!</p>
+
+    <script>
+        // Start positions
+        const player = document.getElementById('player');
+        const monster = document.getElementById('monster');
+
+        let px = 250; // Player X
+        let py = 150; // Player Y
+
+        let mx = 50;  // Monster X
+        let my = 50;  // Monster Y
+
+        // Set start positions
+        player.style.left = px + 'px';
+        player.style.top = py + 'px';
+        monster.style.left = mx + 'px';
+        monster.style.top = my + 'px';
+
+        // 1. Player Move (Arrow Keys)
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') px = px + 20;
+            if (event.key === 'ArrowLeft')  px = px - 20;
+            if (event.key === 'ArrowUp')    py = py - 20;
+            if (event.key === 'ArrowDown')  py = py + 20;
+
+            player.style.left = px + 'px';
+            player.style.top = py + 'px';
+        });
+
+        // 2. Monster Move (Following the Player)
+        // Every 1 second, the monster takes a step towards the player
+        setInterval(() => {
+            if (mx < px) mx = mx + 20; // Move Right
+            if (mx > px) mx = mx - 20; // Move Left
+            if (my < py) my = my + 20; // Move Down
+            if (my > py) my = my - 20; // Move Up
+
+            monster.style.left = mx + 'px';
+            monster.style.top = my + 'px';
+        }, 500); // 500 is the speed (half a second)
+    </script>
+</body>
+</html>

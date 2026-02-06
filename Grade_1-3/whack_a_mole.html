@@ -1,0 +1,112 @@
+<!DOCTYPE html> <!-- This tells the browser we are using HTML5 -->
+<html> <!-- This is the start of our HTML page -->
+<head> <!-- This part holds hidden information about our page -->
+    <title>Whack-a-Mole</title> <!-- This is the name shown on the browser tab -->
+    <style> <!-- This is where we write CSS to make things look pretty -->
+        body { /* This styles the whole background and text */
+            background-color: #dcedc8; /* This makes the background a light green color */
+            text-align: center; /* This puts all our text in the middle of the screen */
+            font-family: 'Comic Sans MS', sans-serif; /* This makes the writing look like a comic book */
+            padding: 20px; /* This adds some space around the edges */
+            margin: 0; /* This removes extra space at the very edges */
+        }
+
+        h1 { color: #33691e; margin-bottom: 10px; } /* This makes the big title dark green */
+        p { font-size: 18px; color: #555; } /* This makes the instructions easy to read */
+
+        .garden { /* This is the box that holds all the holes */
+            display: grid; /* This tells the holes to line up in a box shape */
+            grid-template-columns: repeat(3, 100px); /* This makes 3 columns of holes */
+            gap: 20px; /* This puts space between the holes */
+            justify-content: center; /* This moves the garden to the middle */
+            margin: 20px auto; /* This adds space above and below the garden */
+            max-width: 400px; /* This keeps the garden from getting too wide */
+            background-color: #8bc34a; /* This makes the garden grass a bright green */
+            padding: 30px; /* This adds grass space around the holes */
+            border-radius: 30px; /* This makes the corners of the grass round */
+            border: 10px solid #689f38; /* This adds a thick dark green wood border */
+        }
+
+        .hole { /* This styles the brown holes */
+            width: 100px; /* This makes the hole 100 pixels wide */
+            height: 100px; /* This makes the hole 100 pixels tall */
+            background-color: #5d4037; /* This makes the hole a dark brown dirt color */
+            border-radius: 50%; /* This makes the hole a perfect circle */
+            position: relative; /* This helps us position the mole inside */
+            overflow: hidden; /* This hides the mole when it's underground */
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.5); /* This makes the hole look deep */
+        }
+
+        .mole { /* This styles our little hamster friend */
+            width: 70px; /* This makes the mole wide enough to fit in the hole */
+            height: 90px; /* This makes the mole tall */
+            background-color: #a1887f; /* This makes the mole a light brown fur color */
+            border-radius: 50% 50% 0 0; /* This makes the top of the mole's head round */
+            position: absolute; /* This lets the mole move up and down */
+            left: 15px; /* This puts the mole in the middle of the hole */
+            bottom: -100px; /* This hides the mole deep inside the hole */
+            cursor: pointer; /* This makes the mouse look like a hand when over the mole */
+            display: flex; /* This helps us center the face inside the mole */
+            align-items: center; /* This puts the face in the middle */
+            justify-content: center; /* This keeps the face in the center */
+            font-size: 35px; /* This makes the hamster emoji big */
+            border: 3px solid #8d6e63; /* This adds a thin fur border */
+        }
+
+        @keyframes popUp { /* This is the "movie" for the mole's movement */
+            0%, 5% { bottom: -100px; } /* At the start, the mole is hidden */
+            30%, 70% { bottom: 5px; } /* In the middle, the mole pops up to say hello */
+            95%, 100% { bottom: -100px; } /* At the end, the mole hides again */
+        }
+
+        /* These lines make each mole pop up at different times and speeds */
+        .m1 { animation: popUp 3s infinite; } /* Mole 1 pops up every 3 seconds */
+        .m2 { animation: popUp 4s infinite; animation-delay: 1s; } /* Mole 2 waits 1 second first */
+        .m3 { animation: popUp 3.5s infinite; animation-delay: 0.5s; } /* Mole 3 is a bit different */
+        .m4 { animation: popUp 5s infinite; animation-delay: 2s; } /* Mole 4 is slow */
+        .m5 { animation: popUp 4.2s infinite; animation-delay: 1.5s; } /* Mole 5 is medium */
+        .m6 { animation: popUp 3.8s infinite; animation-delay: 2.5s; } /* Mole 6 waits longer */
+        .m7 { animation: popUp 4.5s infinite; animation-delay: 0.8s; } /* Mole 7 pops up weirdly */
+        .m8 { animation: popUp 3.2s infinite; animation-delay: 1.2s; } /* Mole 8 is fast */
+        .m9 { animation: popUp 4.8s infinite; animation-delay: 0.3s; } /* Mole 9 starts almost right away */
+
+        input[type="checkbox"] { display: none; } /* This hides the messy tick-boxes from the screen */
+
+        input:checked + .mole { /* This is the rule for when you Whack a mole */
+            display: none; /* This makes the mole disappear immediately when clicked! */
+        }
+
+        .reset-btn { /* This is the button to bring the moles back */
+            margin-top: 30px; /* This adds space above the button */
+            padding: 10px 20px; /* This makes the button big and easy to click */
+            background-color: #33691e; /* This makes the button dark green */
+            color: white; /* This makes the text on the button white */
+            border: none; /* This removes the ugly border around the button */
+            border-radius: 10px; /* This makes the button corners round */
+            font-weight: bold; /* This makes the text thick */
+            cursor: pointer; /* This shows the hand icon for clicking */
+            text-decoration: none; /* This removes the line under the text */
+            display: inline-block; /* This makes the link look like a real button */
+        }
+    </style> <!-- End of our CSS styling -->
+</head> <!-- End of the hidden information part -->
+<body> <!-- This is the part of the page we can see -->
+    <h1>Whack-a-Mole! 🔨</h1> <!-- Our big title with a hammer emoji -->
+    <p>Catch all the moles to clear the garden!</p> <!-- Instructions for the child -->
+    
+    <div class="garden"> <!-- This starts our grass garden box -->
+        <!-- Each line below is one hole with one hidden mole inside -->
+        <div class="hole"><label><input type="checkbox"><div class="mole m1">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m2">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m3">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m4">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m5">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m6">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m7">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m8">🐹</div></label></div>
+        <div class="hole"><label><input type="checkbox"><div class="mole m9">🐹</div></label></div>
+    </div> <!-- This ends our grass garden box -->
+
+    <a href="whack_a_mole.html" class="reset-btn">Bring Moles Back!</a> <!-- This is our button that reloads the game -->
+</body> <!-- End of the visible page -->
+</html> <!-- This is the very end of our file -->

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Balloon Pop Game</title>
+    <style>
+        body {
+            background-color: #f3e5f5;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 { color: #7b1fa2; margin-top: 10px; }
+        p { margin: 5px; }
+
+        /* The Game Area */
+        .sky {
+            height: 550px;
+            width: 100%;
+            position: relative;
+            background: linear-gradient(#e1f5fe, #f3e5f5);
+            margin-top: 10px;
+        }
+
+        /* Hide the checkboxes */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .balloon {
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -150px;
+            cursor: pointer;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Balloon String */
+        .balloon::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background-color: #999;
+            position: absolute;
+            bottom: -40px;
+            left: 30px;
+        }
+
+        /* Float Animation (ONLY 1 TIME) */
+        @keyframes floatUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-800px); }
+        }
+
+        /* A lot of balloons with different colors, places, and speeds */
+        .b1 { left: 5%; background-color: #ff5252; animation: floatUp 6s 1 linear forwards; animation-delay: 0s; }
+        .b2 { left: 15%; background-color: #448aff; animation: floatUp 5s 1 linear forwards; animation-delay: 1s; }
+        .b3 { left: 25%; background-color: #4caf50; animation: floatUp 7s 1 linear forwards; animation-delay: 0.5s; }
+        .b4 { left: 35%; background-color: #ffeb3b; animation: floatUp 4s 1 linear forwards; animation-delay: 2s; }
+        .b5 { left: 45%; background-color: #e91e63; animation: floatUp 6s 1 linear forwards; animation-delay: 1.5s; }
+        .b6 { left: 55%; background-color: #9c27b0; animation: floatUp 5s 1 linear forwards; animation-delay: 0.2s; }
+        .b7 { left: 65%; background-color: #ff9800; animation: floatUp 8s 1 linear forwards; animation-delay: 1.2s; }
+        .b8 { left: 75%; background-color: #00bcd4; animation: floatUp 4s 1 linear forwards; animation-delay: 3s; }
+        .b9 { left: 85%; background-color: #8bc34a; animation: floatUp 7s 1 linear forwards; animation-delay: 0.8s; }
+        .b10 { left: 92%; background-color: #3f51b5; animation: floatUp 5s 1 linear forwards; animation-delay: 2.5s; }
+        
+        /* Second wave of balloons */
+        .b11 { left: 10%; background-color: #f44336; animation: floatUp 6s 1 linear forwards; animation-delay: 4s; }
+        .b12 { left: 30%; background-color: #2196f3; animation: floatUp 5s 1 linear forwards; animation-delay: 5s; }
+        .b13 { left: 50%; background-color: #4caf50; animation: floatUp 7s 1 linear forwards; animation-delay: 4.5s; }
+        .b14 { left: 70%; background-color: #ffc107; animation: floatUp 4s 1 linear forwards; animation-delay: 6s; }
+        .b15 { left: 90%; background-color: #e91e63; animation: floatUp 6s 1 linear forwards; animation-delay: 5.5s; }
+
+        /* When clicked, the balloon vanishes! */
+        input:checked + .balloon {
+            display: none;
+        }
+
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: #7b1fa2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px #4a148c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mega Balloon Pop! 🎈🎈🎈</h1>
+    <p>15 balloons will fly by! Can you catch them all?</p>
+
+    <!-- The Sky with Many Balloons -->
+    <div class="sky">
+        <label><input type="checkbox"><div class="balloon b1"></div></label>
+        <label><input type="checkbox"><div class="balloon b2"></div></label>
+        <label><input type="checkbox"><div class="balloon b3"></div></label>
+        <label><input type="checkbox"><div class="balloon b4"></div></label>
+        <label><input type="checkbox"><div class="balloon b5"></div></label>
+        <label><input type="checkbox"><div class="balloon b6"></div></label>
+        <label><input type="checkbox"><div class="balloon b7"></div></label>
+        <label><input type="checkbox"><div class="balloon b8"></div></label>
+        <label><input type="checkbox"><div class="balloon b9"></div></label>
+        <label><input type="checkbox"><div class="balloon b10"></div></label>
+        
+        <!-- Second Wave -->
+        <label><input type="checkbox"><div class="balloon b11"></div></label>
+        <label><input type="checkbox"><div class="balloon b12"></div></label>
+        <label><input type="checkbox"><div class="balloon b13"></div></label>
+        <label><input type="checkbox"><div class="balloon b14"></div></label>
+        <label><input type="checkbox"><div class="balloon b15"></div></label>
+    </div>
+
+    <a href="balloon_pop.html" class="reset-btn">Play Again! 🔄</a>
+
+</body>
+</html>

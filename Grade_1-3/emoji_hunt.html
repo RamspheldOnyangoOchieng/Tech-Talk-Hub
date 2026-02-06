@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Emoji Hunt Game</title>
+    <style>
+        body {
+            background-color: #fff9c4;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #f57f17;
+        }
+
+        .forest {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Hide the actual checkbox */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* The Box (Bush) */
+        .bush {
+            width: 100px;
+            height: 100px;
+            background-color: #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            transition: transform 0.2s;
+            box-shadow: 0 5px #2e7d32;
+        }
+
+        .bush:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hide the emoji inside by default */
+        .emoji {
+            display: none;
+        }
+
+        /* MAGIC CSS LOGIC: When checkbox is Checked, show the emoji and change the bush color */
+        input[type="checkbox"]:checked+.bush {
+            background-color: #81c784;
+            box-shadow: none;
+            transform: translateY(5px);
+        }
+
+        input[type="checkbox"]:checked+.bush .emoji {
+            display: block;
+        }
+
+        .message {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Find the Golden Cat! 🐱✨</h1>
+    <p>Click the green bushes to look inside!</p>
+
+    <div class="forest">
+        <!-- Box 1 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🌸</span></div>
+        </label>
+
+        <!-- Box 2 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🐜</span></div>
+        </label>
+
+        <!-- Box 3 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🐱</span></div>
+        </label>
+
+        <!-- Box 4 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🍄</span></div>
+        </label>
+
+        <!-- Box 5 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🦋</span></div>
+        </label>
+
+        <!-- Box 6 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🍂</span></div>
+        </label>
+
+        <!-- Box 7 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🌰</span></div>
+        </label>
+
+        <!-- Box 8 -->
+        <label>
+            <input type="checkbox">
+            <div class="bush"><span class="emoji">🌷</span></div>
+        </label>
+    </div>
+
+    <p class="message">Can you find the kitty? Or the ant?</p>
+</body>
+
+</html>

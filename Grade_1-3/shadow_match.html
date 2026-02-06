@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shadow Match Game</title>
+    <style>
+        body {
+            background-color: #fce4ec;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif;
+            padding: 20px;
+        }
+
+        h1 { color: #c2185b; }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .shadow-box {
+            font-size: 100px;
+            background-color: #333;
+            color: transparent;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            text-shadow: 0 0 0 black;
+        }
+
+        .choices {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Hide radio buttons */
+        input[type="radio"] { 
+            display: none; 
+        }
+
+        .animal-btn {
+            font-size: 50px;
+            background-color: white;
+            border: 4px solid #c2185b;
+            border-radius: 15px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .animal-btn:hover { transform: scale(1.1); }
+
+        /* Highlight selection */
+        #wrong1:checked + label[for="wrong1"],
+        #correct:checked + label[for="correct"],
+        #wrong2:checked + label[for="wrong2"] {
+            background-color: #f8bbd0;
+            border-color: #ad1457;
+        }
+
+        /* Result messages */
+        .result {
+            font-size: 30px;
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* 
+           CSS MAGIC: 
+           We use the checked radio button to find the result text 
+           that comes AFTER it in the HTML.
+        */
+        #correct:checked ~ .result-win {
+            display: block;
+        }
+
+        #wrong1:checked ~ .result-wrong,
+        #wrong2:checked ~ .result-wrong {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Shadow Match! 🕵️‍♀️</h1>
+    <p>Which animal matches the shadow?</p>
+
+    <div class="game-container">
+        <!-- The Shadow -->
+        <div class="shadow-box">🐘</div>
+
+        
+        <input type="radio" name="match" id="wrong1">
+        <label for="wrong1" class="animal-btn">🦒</label>
+
+        <input type="radio" name="match" id="correct">
+        <label for="correct" class="animal-btn">🐘</label>
+
+        <input type="radio" name="match" id="wrong2">
+        <label for="wrong2" class="animal-btn">🦁</label>
+
+        <!-- The hidden results -->
+        <div class="result result-win" style="color: green;">YOU GOT IT! 🌟🐘</div>
+        <div class="result result-wrong" style="color: red;">NOT QUITE... Try again! ❌</div>
+    </div>
+
+    <p style="margin-top: 40px;">Look closely at the trunk!</p>
+</body>
+</html>
